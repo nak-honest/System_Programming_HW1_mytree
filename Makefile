@@ -1,5 +1,5 @@
-TARGET=test
-OBJ=test.o get_file_info.o
+TARGET=mytree
+OBJ=print_my_tree.o get_file_info.o get_directory_info.o main.o
 CC=gcc
 CFLAGS=-c
 
@@ -13,4 +13,3 @@ $(TARGET): $(OBJ)
 
 clean:
 	rm -rf $(OBJ)
-
