@@ -1,5 +1,5 @@
 TARGET=mytree
-OBJ=print_my_tree.o get_file_info.o get_directory_info.o main.o
+OBJ=print_my_tree_v2.o get_file_info.o get_directory_info.o sort_tree.o mytree.o
 CC=gcc
 CFLAGS=-c
 
