@@ -10,14 +10,17 @@
 
 int main(void) {
     char filePath[4096];
+    int fileNum = 0;
+    int dirNum = 0;
     if (getcwd(filePath, 4096) == NULL) {
         perror("getcwd error");
         exit(-1);
     }
 
     printf(".\n");
-    // char tfilePath[4096] = "/dev";
-    printMyTree(filePath, 0);
+    char tfilePath[4096] = "/home";
+    printMyTree(tfilePath, 0, &fileNum, &dirNum);
+    printf("\n%d directories, %d files\n", dirNum, fileNum);
 
     return 0;
 }

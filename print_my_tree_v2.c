@@ -13,7 +13,7 @@
 char branchInfo[MAX_BUF_SIZE];
 
 /* Tree is implemented by recursive function(Depth First Search). */
-void printMyTree(const char *parentPath, int depth) {
+void printMyTree(const char *parentPath, int depth, int *fileNum, int *dirNum) {
     DIR *dirp;
     struct stat *fileInfo = (struct stat *)malloc(sizeof(struct stat));
     struct passwd *userInfo;
@@ -97,8 +97,8 @@ void printMyTree(const char *parentPath, int depth) {
                        fileInfo->st_dev, perm, userInfo->pw_name, fileSize,
                        dirInfo->d_name);
             }
-
-            printMyTree(childPath, depth);
+            (*dirNum)++;
+            printMyTree(childPath, depth, fileNum, dirNum);
         } else {
             if (branchInfo[depth - 1] == 'N') {
                 printf("└── [%8lu %4ld %s %s %8s]  %s\n", fileInfo->st_ino,
@@ -109,6 +109,7 @@ void printMyTree(const char *parentPath, int depth) {
                        fileInfo->st_dev, perm, userInfo->pw_name, fileSize,
                        dirInfo->d_name);
             }
+            (*fileNum)++;
         }
     }
 
