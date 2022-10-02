@@ -10,7 +10,7 @@
 
 #define MAX_BUF_SIZE 4096
 
-char branchInfo[MAX_BUF_SIZE];
+char isThatLastFile[MAX_BUF_SIZE]; //
 
 /* Tree is implemented by recursive function(Depth First Search). */
 void printMyTree(const char *parentPath, int depth, int *fileNum, int *dirNum) {
@@ -32,7 +32,7 @@ void printMyTree(const char *parentPath, int depth, int *fileNum, int *dirNum) {
     /* When process visits sub directory, tree's depth increases of one. */
     depth++;
 
-    branchInfo[depth - 1] = 'Y';
+    isThatLastFile[depth - 1] = 'Y';
 
     if ((dirp = opendir(parentPath)) == NULL) {
         perror("opendir() error");
@@ -75,20 +75,20 @@ void printMyTree(const char *parentPath, int depth, int *fileNum, int *dirNum) {
         }
 
         if (i == entryNum - 1) {
-            branchInfo[depth - 1] = 'N';
+            isThatLastFile[depth - 1] = 'N';
         }
 
         for (j = 0; j < (depth - 1); j++) {
-            if (branchInfo[j] == 'Y') {
+            if (isThatLastFile[j] == 'Y') {
                 printf("│   ");
-            } else if (branchInfo[j] == 'N') {
+            } else if (isThatLastFile[j] == 'N') {
                 printf("    ");
             }
         }
         /* If the file that we will visit is directory file, call printTree()
          * reculsively. */
         if (S_ISDIR(fileInfo->st_mode)) {
-            if (branchInfo[depth - 1] == 'N') {
+            if (isThatLastFile[depth - 1] == 'N') {
                 printf("└── [%8lu %4ld %s %s %8s]  %s\n", fileInfo->st_ino,
                        fileInfo->st_dev, perm, userInfo->pw_name, fileSize,
                        dirInfo->d_name);
@@ -100,7 +100,7 @@ void printMyTree(const char *parentPath, int depth, int *fileNum, int *dirNum) {
             (*dirNum)++;
             printMyTree(childPath, depth, fileNum, dirNum);
         } else {
-            if (branchInfo[depth - 1] == 'N') {
+            if (isThatLastFile[depth - 1] == 'N') {
                 printf("└── [%8lu %4ld %s %s %8s]  %s\n", fileInfo->st_ino,
                        fileInfo->st_dev, perm, userInfo->pw_name, fileSize,
                        dirInfo->d_name);
