@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+/* Get string of file's type and permission. */
 int GetFilePerm(const mode_t m, char *perm, const int bufSize) {
     if (bufSize < 11) {
         return -1;
@@ -15,6 +16,7 @@ int GetFilePerm(const mode_t m, char *perm, const int bufSize) {
 
     memset(perm, '\0', bufSize);
 
+    /* file's type */
     if (S_ISREG(m)) {
         perm[0] = '-';
     } else if (S_ISDIR(m)) {
@@ -31,6 +33,7 @@ int GetFilePerm(const mode_t m, char *perm, const int bufSize) {
         perm[0] = 's';
     }
 
+    /* file's permission */
     if (S_IRUSR & m) {
         perm[1] = 'r';
     } else {
@@ -80,6 +83,7 @@ int GetFilePerm(const mode_t m, char *perm, const int bufSize) {
     return 0;
 }
 
+/* Get string of file's size. */
 int GetFileSize(off_t s, char *fileSize) {
     double size = (double)s;
     int numOfModulo = 0;
@@ -89,6 +93,7 @@ int GetFileSize(off_t s, char *fileSize) {
         return 1;
     }
 
+    /* If file's size >= 1024, represent the size by unit(K, M, G). */
     while (size >= 1024) {
         size /= (double)1024;
         numOfModulo++;
